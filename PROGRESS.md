@@ -129,6 +129,14 @@ Aplikasi Web Enterprise Asset Management System (EAMS) komprehensif untuk mengel
   - Generator PDF instan berbasis `jsPDF` untuk menghasilkan file `EAMS_Buku_Panduan_Pengoperasian_v1.0.pdf` resolusi cetak dengan satu klik.
   - Fitur pencarian bab panduan dan integrasi tombol cetak (Print).
 
+### 15. Dokumen Spesifikasi Produk Lengkap (PRD.md - Full-Stack Edition)
+- **Penyusunan PRD.md Komprehensif**:
+  - Executive Summary, Problem Statement, dan Pilar Solusi Sistem.
+  - Struktur RBAC 6-Tingkat (Admin, Supervisor Ihwan Suryadi,ST., Coordinator, Mechanic, Warehouse, Asset Specialist).
+  - Arsitektur Full-Stack 3-Lapis (Client Layer, Server/API Proxy Layer, Database Persistence Layer).
+  - Spesifikasi 10 Modul Fungsional, Skema DDL 3NF & LRS, Kontrak REST API, Kebutuhan Non-Fungsional, dan Runbook Deployment.
+
+
 
 
 

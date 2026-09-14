@@ -115,9 +115,21 @@ Aplikasi Web Enterprise Asset Management System (EAMS) komprehensif untuk mengel
   2. **Tabel Relasional Explorer (3NF)**: Penjelajah 6 tabel terpisah dengan primary key, foreign key badge, pencarian cepat, dan penyaringan multi-site.
   3. **Visual Entity-Relationship Diagram (ERD & Data Dictionary)**: Kartu skema visual relasi `1:N` antar tabel serta generator skrip SQL DDL (PostgreSQL / MySQL / Supabase) dengan fitur Salin SQL.
   4. **Mobile Touch Cards**: Tampilan kartu swipeable ramah layar sentuh smartphone untuk pemantauan breakdown rate alat berat di lapangan secara cepat.
-- **Formulir Transaksional**:
-  - Pendaftaran Unit Alat baru dengan validasi FK integritas referensial.
-  - Pencatatan log jam breakdown bulanan dengan kalkulasi otomatis rasio breakdown rate.
-- **Ekspor Data**: Fitur ekspor CSV matriks pivot spreadsheet & skema SQL DDL.
+- **Panduan Terintegrasi Netlify DB**: Tab panduan 5 langkah dengan tombol salin `.env`, skrip DDL SQL, dan dual-layer cache.
+
+### 13. Dokumentasi Logical Record Structure (LRS) Basis Data EAMS
+- **Katalog Entitas LRS Teks Lengkap**:
+  - Transformasi ERD ke LRS dengan notasi relasional standard (`PK`, `*FK`).
+  - Diagram relasi teks kardinalitas antar tabel (1:1, 1:N, M:N).
+  - Kamus Data & Atribut tipe data PostgreSQL/MySQL standar industri.
+
+### 14. Modul Buku Panduan Interaktif & Generator Dokumen PDF (Handbook)
+- **Menu Buku Panduan (PDF)**:
+  - Viewer panduan multi-bab (Filosofi, RBAC, Cockpit KPI, Matrix Failure Rate 3NF, Siklus SPK, Gudang & Mutasi).
+  - Generator PDF instan berbasis `jsPDF` untuk menghasilkan file `EAMS_Buku_Panduan_Pengoperasian_v1.0.pdf` resolusi cetak dengan satu klik.
+  - Fitur pencarian bab panduan dan integrasi tombol cetak (Print).
+
+
+
 
 

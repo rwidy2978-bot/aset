@@ -17,6 +17,7 @@ import { AssetMovementList } from './components/movements/AssetMovementList';
 import { CreateMovementModal } from './components/movements/CreateMovementModal';
 import { DepreciationCalculator } from './components/depreciation/DepreciationCalculator';
 import { AuditLogViewer } from './components/audit/AuditLogViewer';
+import { HandbookViewer } from './components/handbook/HandbookViewer';
 import { QRScannerModal } from './components/scanner/QRScannerModal';
 import { Asset, SparePart } from './types/eams';
 import { db } from './services/db';
@@ -134,6 +135,10 @@ const MainAppContent: React.FC = () => {
 
           {activeTab === 'audit' && (
             <AuditLogViewer />
+          )}
+
+          {activeTab === 'handbook' && (
+            <HandbookViewer />
           )}
         </main>
       </div>

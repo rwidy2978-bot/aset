@@ -12,7 +12,8 @@ import {
   AlertCircle,
   FileCheck,
   Activity,
-  Database
+  Database,
+  BookOpen
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../services/db';
@@ -98,6 +99,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onSelectTab }) => {
       label: 'Audit Trail & Log',
       icon: History,
       badge: null,
+    },
+    {
+      id: 'handbook',
+      label: 'Buku Panduan (PDF)',
+      icon: BookOpen,
+      badge: { text: 'PDF Ready', color: 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' },
     },
   ];
 

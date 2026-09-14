@@ -12,8 +12,11 @@ import {
 } from '../../types/eams';
 
 export const FailureRateDatabaseViewer: React.FC = () => {
-  const [activeView, setActiveView] = useState<'pivot' | 'relational' | 'erd' | 'mobile_cards'>('pivot');
+  const [activeView, setActiveView] = useState<'pivot' | 'relational' | 'erd' | 'mobile_cards' | 'netlify_guide'>('pivot');
   const [relationalTab, setRelationalTab] = useState<'brands' | 'platforms' | 'models' | 'branches' | 'units' | 'metrics'>('brands');
+  const [copiedEnv, setCopiedEnv] = useState(false);
+  const [copiedNetlifyToml, setCopiedNetlifyToml] = useState(false);
+  const [activeGuideStep, setActiveGuideStep] = useState<number>(1);
   
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -311,6 +314,19 @@ export const FailureRateDatabaseViewer: React.FC = () => {
           >
             <Smartphone className="w-4 h-4" />
             <span>Mobile Touch Cards</span>
+          </button>
+
+          <button
+            onClick={() => setActiveView('netlify_guide')}
+            id="tab-view-netlify-guide"
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+              activeView === 'netlify_guide' 
+                ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md shadow-teal-500/30' 
+                : 'text-teal-400 hover:text-white hover:bg-slate-800'
+            }`}
+          >
+            <Sparkles className="w-4 h-4 text-teal-300" />
+            <span>Panduan Database Netlify</span>
           </button>
         </div>
 
@@ -1056,6 +1072,238 @@ export const FailureRateDatabaseViewer: React.FC = () => {
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* ------------------------------------------------------------- */}
+      {/* VIEW 5: PANDUAN LENGKAP MEMBUAT DATABASE DI NETLIFY (3NF)    */}
+      {/* ------------------------------------------------------------- */}
+      {activeView === 'netlify_guide' && (
+        <div className="space-y-6">
+          {/* Header Banner */}
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-teal-950 via-slate-900 to-indigo-950 border border-teal-800/60 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30 flex items-center gap-1.5 w-max">
+                <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+                Step-by-Step Netlify DB & Serverless Deployment
+              </span>
+              <h2 className="text-xl font-black text-white">
+                Panduan Komprehensif Pembuatan Database di Netlify
+              </h2>
+              <p className="text-xs text-slate-300 max-w-2xl">
+                Langkah-langkah mendalam untuk menghubungkan database SQL (Neon Serverless PostgreSQL / Supabase) ke Netlify Functions dan menyinkronkannya 100% dengan aplikasi ini.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(`DATABASE_URL="postgresql://neondb_owner:YOUR_PASSWORD@ep-sample-12345.ap-southeast-1.aws.neon.tech/eams_db?sslmode=require"`);
+                  setCopiedEnv(true);
+                  setTimeout(() => setCopiedEnv(false), 2000);
+                }}
+                className="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold shadow-lg shadow-teal-600/30 transition-all flex items-center gap-1.5"
+              >
+                {copiedEnv ? <CheckCircle2 className="w-4 h-4 text-white" /> : <Database className="w-4 h-4" />}
+                <span>{copiedEnv ? 'Format .env Disalin!' : 'Salin Contoh .env'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Stepper Navigation Buttons */}
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            {[
+              { num: 1, title: '1. Netlify DB / Neon', sub: 'Provisioning SQL' },
+              { num: 2, title: '2. Eksekusi Schema', sub: 'DDL 6 Tabel 3NF' },
+              { num: 3, title: '3. Konfigurasi Netlify', sub: 'Environment Var' },
+              { num: 4, title: '4. Serverless API', sub: 'Netlify Functions' },
+              { num: 5, title: '5. Sinkronisasi & Test', sub: 'Verifikasi Live' }
+            ].map((step) => (
+              <button
+                key={step.num}
+                onClick={() => setActiveGuideStep(step.num)}
+                className={`p-3 rounded-2xl text-left border transition-all ${
+                  activeGuideStep === step.num
+                    ? 'bg-teal-900/50 border-teal-500 text-white shadow-lg shadow-teal-500/10'
+                    : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+              >
+                <span className={`text-[10px] font-mono font-bold block ${activeGuideStep === step.num ? 'text-teal-400' : 'text-slate-500'}`}>
+                  LANGKAH {step.num}
+                </span>
+                <span className="text-xs font-bold text-white block mt-0.5">{step.title}</span>
+                <span className="text-[11px] text-slate-400 block">{step.sub}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Step 1: Provisioning Database */}
+          {activeGuideStep === 1 && (
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-400 font-bold flex items-center justify-center text-sm border border-teal-500/30">1</span>
+                <div>
+                  <h3 className="text-base font-bold text-white">Membuat Basis Data PostgreSQL di Netlify (via Netlify DB / Neon)</h3>
+                  <p className="text-xs text-slate-400">Netlify menyediakan integrasi resmi langsung dengan database PostgreSQL Serverless (Neon/Supabase) yang berskala otomatis.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300">
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                  <h4 className="font-bold text-teal-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-teal-400" />
+                    Opsi A: Integrasi Netlify Dashboard (1-Click)
+                  </h4>
+                  <ol className="list-decimal pl-4 space-y-1.5 text-slate-400">
+                    <li>Buka dashboard <strong>app.netlify.com</strong> dan pilih situs Anda.</li>
+                    <li>Klik tab menu <strong>Integrations</strong> atau <strong>Database</strong> di bilah kiri.</li>
+                    <li>Cari dan pilih <strong>Neon Database</strong> atau <strong>Supabase</strong>.</li>
+                    <li>Klik <strong>Install / Connect</strong>. Netlify akan secara otomatis membuatkan instance PostgreSQL dan menginjeksi variabel <code className="text-teal-300 font-mono">DATABASE_URL</code> ke environment proyek Anda.</li>
+                  </ol>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                  <h4 className="font-bold text-cyan-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+                    Opsi B: Menggunakan Akun Neon.tech / Supabase Mandiri
+                  </h4>
+                  <ol className="list-decimal pl-4 space-y-1.5 text-slate-400">
+                    <li>Daftar gratis di <strong>neon.tech</strong> atau <strong>supabase.com</strong>.</li>
+                    <li>Buat project database baru bernama <code className="text-cyan-300 font-mono">eams_failure_matrix</code> di region <strong>Singapore (ap-southeast-1)</strong> untuk latensi tercepat ke Indonesia.</li>
+                    <li>Salin <strong>Connection String URI</strong> Anda (format: <code className="text-amber-300 font-mono">postgresql://user:password@host/dbname</code>).</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Running Schema */}
+          {activeGuideStep === 2 && (
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-400 font-bold flex items-center justify-center text-sm border border-teal-500/30">2</span>
+                  <div>
+                    <h3 className="text-base font-bold text-white">Mengeksekusi Skema Relasional 3NF & Seed Data</h3>
+                    <p className="text-xs text-slate-400">Buka SQL Editor di console Netlify/Neon/Supabase Anda dan jalankan skrip berikut sekali jalan:</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(failureRateDb.generateSQLSchema());
+                    setSqlCopied(true);
+                    setTimeout(() => setSqlCopied(false), 2000);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  {sqlCopied ? <CheckCircle2 className="w-3.5 h-3.5" /> : <FileCode className="w-3.5 h-3.5" />}
+                  <span>{sqlCopied ? 'DDL Tersalin!' : 'Salin Lengkap DDL SQL'}</span>
+                </button>
+              </div>
+
+              <div className="relative">
+                <pre className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-emerald-400 overflow-y-auto max-h-72">
+                  {failureRateDb.generateSQLSchema()}
+                </pre>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Configure Netlify Environment */}
+          {activeGuideStep === 3 && (
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-400 font-bold flex items-center justify-center text-sm border border-teal-500/30">3</span>
+                <div>
+                  <h3 className="text-base font-bold text-white">Memasang Environment Variables & netlify.toml</h3>
+                  <p className="text-xs text-slate-400">Pastikan konfigurasi routing dan credentials database terpasang dengan benar di Netlify.</p>
+                </div>
+              </div>
+
+              <div className="space-y-3 text-xs text-slate-300">
+                <p>1. Masuk ke <strong>Site Configuration ➔ Environment Variables</strong> di Netlify Dashboard.</p>
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-[11px] text-teal-300">
+                  DATABASE_URL="postgresql://user:password@ep-host.ap-southeast-1.aws.neon.tech/eams_db?sslmode=require"
+                </div>
+
+                <p className="pt-2">2. File <code className="text-cyan-300 font-mono">netlify.toml</code> telah dibuat di root proyek ini untuk mengatur build & rewrite API:</p>
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-[11px] text-slate-300">
+                  <p className="text-slate-500"># netlify.toml</p>
+                  <p className="text-cyan-400">[build]</p>
+                  <p>  command = "npm run build"</p>
+                  <p>  publish = "dist"</p>
+                  <p>  functions = "netlify/functions"</p>
+                  <br />
+                  <p className="text-cyan-400">[[redirects]]</p>
+                  <p>  from = "/api/*"</p>
+                  <p>  to = "/.netlify/functions/:splat"</p>
+                  <p>  status = 200</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Netlify Functions Handler */}
+          {activeGuideStep === 4 && (
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-400 font-bold flex items-center justify-center text-sm border border-teal-500/30">4</span>
+                <div>
+                  <h3 className="text-base font-bold text-white">Serverless API Endpoint di Netlify Functions</h3>
+                  <p className="text-xs text-slate-400">File endpoint telah disediakan pada <code className="text-teal-300 font-mono">netlify/functions/failure-rate.ts</code> untuk melayani query data relasional berkecepatan tinggi.</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
+                <div className="text-slate-500">// URL Endpoint otomatis Netlify:</div>
+                <div className="text-emerald-400 font-bold">GET /api/failure-rate?brand=DINGLI&store=Jakarta</div>
+                <div className="text-slate-400">// Handler menjalankan query SQL JOIN tanpa redundansi:</div>
+                <div className="p-2.5 rounded bg-slate-900 text-cyan-300 text-[11px]">
+                  SELECT u.eq_number, b.name as brand, m.model_name, br.store_name, met.period_month, met.breakdown_rate<br/>
+                  FROM equipment_units u<br/>
+                  JOIN equipment_models m ON u.model_id = m.id<br/>
+                  JOIN equipment_platforms p ON m.platform_id = p.id<br/>
+                  JOIN equipment_brands b ON p.brand_id = b.id<br/>
+                  JOIN equipment_branches br ON u.store_id = br.id<br/>
+                  LEFT JOIN monthly_breakdown_metrics met ON met.equipment_id = u.id;
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 5: Verification & Sync */}
+          {activeGuideStep === 5 && (
+            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-400 font-bold flex items-center justify-center text-sm border border-teal-500/30">5</span>
+                <div>
+                  <h3 className="text-base font-bold text-white">Sinkronisasi & Respon Cepat di Semua Perangkat</h3>
+                  <p className="text-xs text-slate-400">Mekanisme sinkronisasi ganda (Dual-Layer Cache) memastikan aplikasi tetap responsif 0-latensi di smartphone maupun offline.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                  <span className="text-[10px] font-bold text-teal-400 uppercase">Layer 1</span>
+                  <h4 className="font-bold text-white">Ultra-Fast Client Cache</h4>
+                  <p className="text-slate-400 text-[11px]">Data disimpan lokal di memori & browser storage untuk render instan &lt; 5ms saat scrolling di smartphone.</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                  <span className="text-[10px] font-bold text-cyan-400 uppercase">Layer 2</span>
+                  <h4 className="font-bold text-white">Netlify Edge Serverless</h4>
+                  <p className="text-slate-400 text-[11px]">Netlify Edge Functions mengeksekusi request di CDN terdekat dengan lokasi pengguna.</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                  <span className="text-[10px] font-bold text-indigo-400 uppercase">Layer 3</span>
+                  <h4 className="font-bold text-white">Postgres 3NF Persistence</h4>
+                  <p className="text-slate-400 text-[11px]">Integritas ACID data terjamin penuh di database relasional tanpa ada risiko anomali update.</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

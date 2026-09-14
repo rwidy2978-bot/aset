@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Building2, ShieldCheck, UserCheck, QrCode, Search, 
-  RotateCcw, Sparkles, ChevronDown, CheckCircle2, AlertTriangle, Download
+  RotateCcw, Sparkles, ChevronDown, CheckCircle2, AlertTriangle, Download, BookOpen
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../services/db';
@@ -168,6 +168,18 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls & Role Switcher */}
         <div className="flex items-center gap-2.5">
+          {/* Handbook PDF Button */}
+          <button
+            onClick={() => onNavigate('handbook')}
+            id="btn-header-handbook"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20"
+            title="Buka Buku Panduan & Download PDF"
+          >
+            <BookOpen className="w-4 h-4 text-blue-200" />
+            <span className="hidden sm:inline">Buku Panduan (PDF)</span>
+            <span className="sm:hidden">PDF</span>
+          </button>
+
           {/* Quick QR Scanner Button */}
           <button
             onClick={onOpenQRScanner}

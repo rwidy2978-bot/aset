@@ -3,7 +3,7 @@ import {
   Filter, RotateCcw, FileSpreadsheet, ExternalLink, 
   TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Info,
   ChevronDown, ArrowRight, Download, BarChart2, Calendar, MapPin,
-  Clock, ShieldAlert, Cpu, Award, Zap, Layers, RefreshCw
+  Clock, ShieldAlert, Cpu, Award, Zap, Layers, RefreshCw, BookOpen, FileText
 } from 'lucide-react';
 import { 
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, 
@@ -343,6 +343,43 @@ export const MaintenanceCockpit: React.FC<MaintenanceCockpitProps> = ({
       {/* MAIN ANALYTICS CARDS GRID (Exact 3-Row Layout From Image) */}
       {/* ========================================================================= */}
       <div className="flex-1 space-y-3.5 max-w-full">
+
+        {/* Quick Access Top Bar: Buku Panduan PDF & Matriks GSheet */}
+        <div className="p-3.5 rounded-xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 shadow-md flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400">
+              <BookOpen className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="text-xs font-bold text-white flex items-center gap-2">
+                <span>Buku Panduan Pengoperasian (Handbook)</span>
+                <span className="text-[10px] px-2 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono">
+                  PDF Siap Download
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300">
+                Panduan lengkap metrik keandalan, alur Work Order, dan basis data relasional.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => onNavigate && onNavigate('handbook')}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-blue-600/20 transition-all"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Buka & Download PDF</span>
+            </button>
+            <button
+              onClick={() => onNavigate && onNavigate('matrix')}
+              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Matriks GSheet (3NF)</span>
+            </button>
+          </div>
+        </div>
 
         {/* ------------------------------------------------------------- */}
         {/* ROW 1: MTTR (Mean Time to Repair) & Failure Rate (Unplanned)  */}
